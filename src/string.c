@@ -42,8 +42,15 @@ char *strcpy(char *dest, const char *src)
 
 char *strncpy(char *dest, const char *src, size_t n)
 {
-    for (size_t i = 0; i <= n; i++) {
+    size_t i = 0;
+
+    // Copy everything until we encounter a NULL byte.
+    for (size_t i = 0; i < n && src[i] != '\0'; i++) {
         dest[i] = src[i];
+    }
+    // Fill remainder with NULL bytes.
+    for (; i <= n; i++) {
+        dest[i] = '\0';
     }
 
     return dest;
@@ -88,6 +95,18 @@ int strncmp(const char *s1, const char *s2, size_t n)
 // char *strchr(const char *s, int c);
 // char *strrchr(const char *s, int c);
 
+char *strdup(const char *str)
+{
+    return strndup(str, strlen(str));
+}
+
+char *strndup(const char *str, size_t n)
+{
+    char *duplicate = ali_malloc(strlen(str));
+    strncpy(duplicate, str, n);
+
+    return duplicate;
+}
 
 size_t strlen(const char *str)
 {
